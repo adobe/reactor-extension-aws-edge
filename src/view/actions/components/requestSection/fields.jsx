@@ -30,7 +30,7 @@ const parseQueryParams = (setValue, v) => {
   });
 };
 
-export default function RequestSection() {
+export default function RequestSectionFields() {
   const { setValue, control } = useFormContext();
 
   return (

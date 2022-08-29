@@ -24,7 +24,7 @@ import Add from '@spectrum-icons/workflow/Add';
 import row from './row';
 import getEmptyQueryParam from './getEmptyValue';
 
-export default function QueryParamsSection() {
+export default function QueryParamsSectionFields() {
   const { watch, setValue } = useFormContext();
   const url = watch('url');
 

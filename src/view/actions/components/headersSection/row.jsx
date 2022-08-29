@@ -16,7 +16,7 @@ import { ActionButton, Flex, View } from '@adobe/react-spectrum';
 import WrappedTextField from '../../../components/wrappedTextField';
 import WrappedComboBox from '../../../components/wrappedComboBox';
 
-export default function BodySectionRow(remove, variable, index, variables) {
+export default function HeadersSectionRow(remove, variable, index, variables) {
   const { id, key, value } = variable;
   return (
     <Flex direction="row" gap="size-200" key={`headers${id}`}>
