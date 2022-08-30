@@ -11,6 +11,32 @@
   },
   "platform": "edge",
   "viewBasePath": "dist/",
+  "configuration": {
+    "viewPath": "configuration/configuration.html",
+    "schema": {
+      "$schema": "http://json-schema.org/draft-06/schema#",
+      "type": "object",
+      "properties": {
+        "credentials": {
+          "type": "object",
+          "properties": {
+            "accessKeyId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "secretAccessKey": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false,
+          "required": ["accessKeyId", "secretAccessKey"]
+        }
+      },
+      "additionalProperties": false,
+      "required": ["credentials"]
+    }
+  },
   "actions": [
     {
       "name": "send-data-to-kinesis",

@@ -10,48 +10,28 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-// import React from 'react';
+import React from 'react';
 
-// import ExtensionView from '../components/extensionView';
+import ExtensionView from '../components/extensionView';
 
-// import GeneralInformationFields from '../components/generalInformationSection/fields';
-// import getGeneralInformationInitValues
-//    from '../components/generalInformationSection/getInitValues';
-// import getGeneralInformationSettings from '../components/generalInformationSection/getSettings';
-// import validateGeneralInformationFields from '../components/generalInformationSection/validate';
+import CredentialsFields from './components/credentialsSection/fields';
+import getCredentialsInitValues from './components/credentialsSection/getInitValues';
+import getCredentialsSettings from './components/credentialsSection/getSettings';
+import validateCredentialsFields from './components/credentialsSection/validate';
 
-// import TemplatesListFields from '../components/templatesListSection/fields';
-// import getTemplatesListInitValues from '../components/templatesListSection/getInitValues';
-// import getTemplatesListSettings from '../components/templatesListSection/getSettings';
-// import validateTemplatesListFields from '../components/templatesListSection/validate';
-
-// import getFinalTemplatesFromValues
-//   from '../components/templatesListSection/getFinalTemplatesFromValues';
-
-export default () => {
-  //(
-  // <ExtensionView
-  //   getInitialValues={({ initInfo }) => ({
-  //     ...getGeneralInformationInitValues(initInfo),
-  //     ...getTemplatesListInitValues(initInfo)
-  //   })}
-  //   getSettings={({ values }) => {
-  //     values.templates = getFinalTemplatesFromValues(values);
-  //     return {
-  //       ...getGeneralInformationSettings(values),
-  //       ...getTemplatesListSettings(values)
-  //     };
-  //   }}
-  //   validate={(values) => ({
-  //     ...validateGeneralInformationFields(values),
-  //     ...validateTemplatesListFields(values)
-  //   })}
-  //   render={() => (
-  //     <>
-  //       <GeneralInformationFields />
-  //       <TemplatesListFields />
-  //     </>
-  //   )}
-  // />
-  //);
-};
+export default function SendDataToKinesis() {
+  return (
+    <ExtensionView
+      getInitialValues={({ initInfo }) => ({
+        ...getCredentialsInitValues(initInfo)
+      })}
+      getSettings={({ values }) => ({
+        ...getCredentialsSettings(values)
+      })}
+      validate={(values) => ({
+        ...validateCredentialsFields(values)
+      })}
+      render={() => <CredentialsFields />}
+    />
+  );
+}
