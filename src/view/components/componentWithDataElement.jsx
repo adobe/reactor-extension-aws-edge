@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 
 import React from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
-import { ActionButton, TextField } from '@adobe/react-spectrum';
+import { ActionButton, Flex } from '@adobe/react-spectrum';
 import Data from '@spectrum-icons/workflow/Data';
 import ValidationWrapper from './validationWrapper';
 
@@ -42,63 +42,35 @@ const openDataElementSelector =
       });
   };
 
-export default function WrappedTextField({
-  component: Component = TextField,
-  name: componentName,
-  onChange: componentOnChange,
-  onBlur: componentOnBlur,
+export default function ComponentWithDataElement({
+  children,
+  width,
+  componentOnChange,
   supportDataElement,
-  defaultValue = '',
-  width = 'auto',
-  ...rest
+  name,
+  rest
 }) {
   const methods = useFormContext();
   const hasLabel = Boolean(rest.label);
 
   return (
-    <Controller
-      name={componentName}
-      defaultValue={defaultValue}
-      render={({ field: { onChange, onBlur, name, value } }) => (
-        <ValidationWrapper width={width}>
-          <Component
-            width={width}
-            name={name}
-            onBlur={(e) => {
-              onBlur(e);
-              if (componentOnBlur) {
-                componentOnBlur(e);
-              }
-            }}
-            onChange={(v) => {
-              onChange(v);
-              if (componentOnChange) {
-                componentOnChange(v);
-              }
-            }}
-            value={value}
-            autoComplete="off"
-            {...rest}
-          />
-
-          {supportDataElement && (
-            <ActionButton
-              aria-label="Open data element selector"
-              marginTop={hasLabel ? 'size-300' : ''}
-              marginStart="size-65"
-              onPress={openDataElementSelector(
-                supportDataElement,
-                name,
-                methods,
-                componentOnChange
-              )}
-            >
-              <Data />
-            </ActionButton>
+    <Flex direction="row" width={width}>
+      {children}
+      {supportDataElement && (
+        <ActionButton
+          aria-label="Open data element selector"
+          marginTop={hasLabel ? 'size-300' : ''}
+          marginStart="size-65"
+          onPress={openDataElementSelector(
+            supportDataElement,
+            name,
+            methods,
+            componentOnChange
           )}
-        </ValidationWrapper>
+        >
+          <Data />
+        </ActionButton>
       )}
-      {...rest}
-    />
+    </Flex>
   );
 }

@@ -35,13 +35,15 @@
   },
   "dependencies": {
     "@adobe/react-spectrum": "^3.20.0",
+    "@aws-sdk/client-kinesis": "^3.160.0",
     "@spectrum-icons/illustrations": "^3.3.1",
     "@spectrum-icons/workflow": "^4.0.1",
     "classnames": "^2.3.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.34.2"
+    "react-hook-form": "^7.34.2",
+    "react-stately": "^3.17.0"
   },
   "devDependencies": {
     "@adobe/reactor-sandbox": "^12.4.0",

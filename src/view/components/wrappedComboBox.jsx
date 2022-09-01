@@ -14,6 +14,7 @@ governing permissions and limitations under the License.
 import React from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { ActionButton, ComboBox, Item } from '@adobe/react-spectrum';
+import { useTreeData } from 'react-stately';
 import Data from '@spectrum-icons/workflow/Data';
 import ValidationWrapper from './validationWrapper';
 
@@ -39,57 +40,97 @@ const openDataElementSelector =
       });
   };
 
-export default function AdvancedSection({
+export default function WrappedComboBoxField({
   name: componentName,
   onSelectionChange: componentOnSelectionChange,
+  onInputChange: componentOnInputChange,
   onBlur: componentOnBlur,
   supportDataElement,
   defaultValue = '',
+  defaultItems,
   width = 'auto',
   ...rest
 }) {
   const methods = useFormContext();
   const hasLabel = Boolean(rest.label);
+  const { watch } = methods;
+
+  const list = useTreeData({
+    initialItems: defaultItems
+  });
+
+  const initialValue = watch(componentName);
+
+  const [fieldState, setFieldState] = React.useState({
+    selectedKey: list.getItem(initialValue)?.value.id,
+    inputValue: initialValue
+  });
 
   return (
     <Controller
       name={componentName}
       defaultValue={defaultValue}
-      render={({ field: { onChange, onBlur, value, name, ref } }) => (
-        <ValidationWrapper width={width}>
-          <ComboBox
-            width={width}
-            name={name}
-            onBlur={(e) => {
-              onBlur(e);
-              if (componentOnBlur) {
-                componentOnBlur(e);
-              }
-            }}
-            onInputChange={onChange}
-            inputValue={value}
-            inputRef={ref}
-            {...rest}
-          >
-            {(item) => <Item>{item.name}</Item>}
-          </ComboBox>
+      render={({ field: { onChange, onBlur, name } }) => {
+        return (
+          <ValidationWrapper width={width}>
+            <ComboBox
+              {...rest}
+              width={width}
+              name={name}
+              onBlur={(e) => {
+                onBlur(e);
+                if (componentOnBlur) {
+                  componentOnBlur(e);
+                }
+              }}
+              defaultItems={list.items}
+              selectedKey={fieldState.selectedKey}
+              inputValue={fieldState.inputValue}
+              onSelectionChange={(key) => {
+                setFieldState({
+                  inputValue: list.getItem(key)?.value.name ?? '',
+                  selectedKey: key
+                });
 
-          {supportDataElement && (
-            <ActionButton
-              aria-label="Open data element selector"
-              marginStart="size-65"
-              marginTop={hasLabel ? 'size-300' : ''}
-              onPress={openDataElementSelector(
-                supportDataElement,
-                name,
-                methods
-              )}
+                onChange(list.getItem(key)?.value.name ?? '');
+
+                if (componentOnSelectionChange) {
+                  componentOnSelectionChange(key);
+                }
+              }}
+              onInputChange={(v) => {
+                setFieldState((prevState) => ({
+                  inputValue: v,
+                  selectedKey: v === '' ? null : prevState.selectedKey
+                }));
+
+                onChange(v);
+
+                if (componentOnInputChange) {
+                  componentOnInputChange(v);
+                }
+              }}
             >
-              <Data />
-            </ActionButton>
-          )}
-        </ValidationWrapper>
-      )}
+              {(item) => <Item>{item.value.name}</Item>}
+            </ComboBox>
+
+            {supportDataElement && (
+              <ActionButton
+                aria-label="Open data element selector"
+                marginStart="size-65"
+                marginTop={hasLabel ? 'size-300' : ''}
+                onPress={openDataElementSelector(
+                  supportDataElement,
+                  name,
+                  methods
+                )}
+              >
+                <Data />
+              </ActionButton>
+            )}
+          </ValidationWrapper>
+        );
+      }}
       {...rest}
     />
   );

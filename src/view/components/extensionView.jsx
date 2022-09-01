@@ -31,7 +31,11 @@ const ExtensionView = function ExtensionView({
   const methods = useForm({
     mode: 'onTouched',
     shouldUnregister: false,
-    resolver: (values) => ({ values, errors: validate(values) })
+    resolver: (values) => {
+      const errors = validate(values);
+      // console.log('VALIDATE', errors);
+      return { values, errors };
+    }
   });
 
   useEffect(() => {

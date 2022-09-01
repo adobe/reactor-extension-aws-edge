@@ -14,7 +14,7 @@
   "configuration": {
     "viewPath": "configuration/configuration.html",
     "schema": {
-      "$schema": "http://json-schema.org/draft-06/schema#",
+      "$schema": "http://json-schema.org/draft-04/schema#",
       "type": "object",
       "properties": {
         "credentials": {
@@ -39,58 +39,32 @@
   },
   "actions": [
     {
-      "name": "send-data-to-kinesis",
-      "displayName": "Send Data to Kinesis",
-      "libPath": "src/lib/actions/sendDataToKinesis.js",
-      "viewPath": "actions/sendDataToKinesis.html",
+      "name": "send-data-to-kinesis-data-stream",
+      "displayName": "Send Data to Kinesis Data Stream",
+      "libPath": "src/lib/actions/sendDataToKinesisDataStream.js",
+      "viewPath": "actions/sendDataToKinesisDataStream.html",
       "schema": {
-        "$schema": "http://json-schema.org/draft-06/schema#",
+        "$schema": "http://json-schema.org/draft-04/schema#",
         "type": "object",
         "properties": {
-          "method": {
+          "streamName": {
             "type": "string",
-            "minLength": 1,
-            "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"]
+            "minLength": 1
           },
-          "url": {
-            "type": "string",
-            "minLength": 1,
-            "pattern": "https?:\\/\\/[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]+\\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)"
-          },
-          "headers": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "key": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "value": {
-                  "type": "string"
-                }
-              }
-            },
-            "additionalProperties": false,
-            "required": ["key", "name"]
-          },
-          "body": {
+          "data": {
             "oneOf": [
               {
                 "type": "object"
               },
               {
-                "type": "string"
+                "type": "string",
+                "minLength": 1
               }
             ]
-          },
-          "responseKey": {
-            "type": "string",
-            "minLength": 1
           }
         },
         "additionalProperties": false,
-        "required": ["method", "url"]
+        "required": ["streamName", "data"]
       }
     }
   ]
