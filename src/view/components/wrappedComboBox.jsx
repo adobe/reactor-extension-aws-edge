@@ -21,24 +21,22 @@ import ValidationWrapper from './validationWrapper';
 const addDataElementToken = (value, dataElementToken) =>
   `${value || ''}${dataElementToken}`;
 
-const openDataElementSelector =
-  (tokenize, name, { getValues, setValue }) =>
-  () => {
-    // Whenever we're dealing with a data element token, we add it to whatever the existing value
-    // is. If we're not dealing with a token, we replace the value entirely. This is just due
-    // to how we want the UX to flow.
-    window.extensionBridge
-      .openDataElementSelector({
-        tokenize
-      })
-      .then((dataElement) => {
-        const newValue = tokenize
-          ? addDataElementToken(getValues(name), dataElement)
-          : dataElement;
+const openDataElementSelector = (tokenize, fieldState, onInputChange) => () => {
+  // Whenever we're dealing with a data element token, we add it to whatever the existing value
+  // is. If we're not dealing with a token, we replace the value entirely. This is just due
+  // to how we want the UX to flow.
+  window.extensionBridge
+    .openDataElementSelector({
+      tokenize
+    })
+    .then((dataElement) => {
+      const newValue = tokenize
+        ? addDataElementToken(fieldState.inputValue, dataElement)
+        : dataElement;
 
-        setValue(name, newValue, { shouldValidate: true, shouldDirty: true });
-      });
-  };
+      onInputChange(newValue);
+    });
+};
 
 export default function WrappedComboBoxField({
   name: componentName,
@@ -71,6 +69,19 @@ export default function WrappedComboBoxField({
       name={componentName}
       defaultValue={defaultValue}
       render={({ field: { onChange, onBlur, name } }) => {
+        const onInputChange = (v) => {
+          setFieldState((prevState) => ({
+            inputValue: v,
+            selectedKey: v === '' ? null : prevState.selectedKey
+          }));
+
+          onChange(v);
+
+          if (componentOnInputChange) {
+            componentOnInputChange(v);
+          }
+        };
+
         return (
           <ValidationWrapper width={width}>
             <ComboBox
@@ -87,29 +98,22 @@ export default function WrappedComboBoxField({
               selectedKey={fieldState.selectedKey}
               inputValue={fieldState.inputValue}
               onSelectionChange={(key) => {
-                setFieldState({
-                  inputValue: list.getItem(key)?.value.name ?? '',
-                  selectedKey: key
+                setFieldState((prevState) => {
+                  return {
+                    inputValue:
+                      list.getItem(key)?.value.name ??
+                      (rest.allowsCustomValue ? prevState.inputValue : ''),
+                    selectedKey: key
+                  };
                 });
 
-                onChange(list.getItem(key)?.value.name ?? '');
+                onChange(fieldState.inputValue);
 
                 if (componentOnSelectionChange) {
                   componentOnSelectionChange(key);
                 }
               }}
-              onInputChange={(v) => {
-                setFieldState((prevState) => ({
-                  inputValue: v,
-                  selectedKey: v === '' ? null : prevState.selectedKey
-                }));
-
-                onChange(v);
-
-                if (componentOnInputChange) {
-                  componentOnInputChange(v);
-                }
-              }}
+              onInputChange={onInputChange}
             >
               {(item) => <Item>{item.value.name}</Item>}
             </ComboBox>
@@ -121,8 +125,8 @@ export default function WrappedComboBoxField({
                 marginTop={hasLabel ? 'size-300' : ''}
                 onPress={openDataElementSelector(
                   supportDataElement,
-                  name,
-                  methods
+                  fieldState,
+                  onInputChange
                 )}
               >
                 <Data />
