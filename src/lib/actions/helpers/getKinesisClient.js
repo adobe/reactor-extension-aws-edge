@@ -10,32 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { addToEntityFromVariables } from '../../../utils/entityVariablesConverter';
+const { KinesisClient } = require('@aws-sdk/client-kinesis');
 
-export default ({ dataType, dataRaw, dataJsonPairs }) => {
-  let data;
-  const settings = {};
-
-  if (dataType === 'json') {
-    data = addToEntityFromVariables(
-      {},
-      dataJsonPairs.filter((p) => p.key || p.value)
-    );
-
-    if (Object.keys(data).length === 0) {
-      data = null;
+module.exports = ({ region, accessKeyId, secretAccessKey }) => {
+  return new KinesisClient({
+    region,
+    credentials: {
+      accessKeyId,
+      secretAccessKey
     }
-  } else {
-    try {
-      data = JSON.parse(dataRaw);
-    } catch {
-      data = dataRaw;
-    }
-  }
-
-  if (data) {
-    settings.data = data;
-  }
-
-  return settings;
+  });
 };

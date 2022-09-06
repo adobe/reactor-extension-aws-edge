@@ -10,32 +10,17 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { addToEntityFromVariables } from '../../../utils/entityVariablesConverter';
-
-export default ({ dataType, dataRaw, dataJsonPairs }) => {
-  let data;
-  const settings = {};
-
-  if (dataType === 'json') {
-    data = addToEntityFromVariables(
-      {},
-      dataJsonPairs.filter((p) => p.key || p.value)
-    );
-
-    if (Object.keys(data).length === 0) {
-      data = null;
-    }
-  } else {
-    try {
-      data = JSON.parse(dataRaw);
-    } catch {
-      data = dataRaw;
-    }
+const jsonToBinaryArray = (json) => {
+  if (typeof json === 'string') {
+    json = `"${json}"`;
   }
-
-  if (data) {
-    settings.data = data;
-  }
-
-  return settings;
+  const str = JSON.stringify(json, null, 0);
+  return new TextEncoder().encode(str);
 };
+
+const binaryArrayToJson = (uint8array) => {
+  const string = new TextDecoder().decode(uint8array);
+  return JSON.parse(string);
+};
+
+module.exports = { jsonToBinaryArray, binaryArrayToJson };

@@ -51,10 +51,24 @@
             "type": "string",
             "minLength": 1
           },
+          "region": {
+            "type": "string",
+            "minLength": 1
+          },
+          "partitionKey": {
+            "type": "string",
+            "minLength": 1
+          },
           "data": {
             "oneOf": [
               {
                 "type": "object"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
               },
               {
                 "type": "string",
@@ -64,7 +78,7 @@
           }
         },
         "additionalProperties": false,
-        "required": ["streamName", "data"]
+        "required": ["streamName", "partitionKey", "region", "data"]
       }
     }
   ]

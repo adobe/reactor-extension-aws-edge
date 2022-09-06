@@ -64,7 +64,7 @@ export default function WrappedTextField({
         };
 
         return (
-          <ValidationWrapper width={width}>
+          <ValidationWrapper>
             <Component
               width={width}
               name={name}

@@ -11,6 +11,6 @@ governing permissions and limitations under the License.
 */
 import awsRegions from '../../../utils/awsRegions';
 
-export default ({ streamName, region }) => {
-  return { streamName, region: awsRegions.getRegionId(region) };
+export default ({ streamName, region, partitionKey }) => {
+  return { streamName, region: awsRegions.getRegionId(region), partitionKey };
 };

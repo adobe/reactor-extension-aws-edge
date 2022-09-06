@@ -10,15 +10,19 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export default ({ streamName, region }) => {
+export default ({ streamName, region, partitionKey }) => {
   const errors = {};
 
   if (!streamName) {
-    errors.streamName = 'Please provide a Stream Name';
+    errors.streamName = 'Please provide a stream name';
   }
 
   if (!region) {
     errors.region = 'Please provide an AWS region';
+  }
+
+  if (!partitionKey) {
+    errors.partitionKey = 'Please provide a partition key';
   }
 
   return errors;

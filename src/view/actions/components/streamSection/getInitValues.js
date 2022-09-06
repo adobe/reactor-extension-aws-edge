@@ -15,6 +15,7 @@ import awsRegions from '../../../utils/awsRegions';
 export default ({ settings }) => {
   return {
     streamName: settings?.streamName || '',
-    region: awsRegions.getRegionName(settings?.region || 'us-east-2')
+    region: awsRegions.getRegionName(settings?.region || 'us-east-2'),
+    partitionKey: settings?.partitionKey || ''
   };
 };

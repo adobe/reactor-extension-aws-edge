@@ -24,6 +24,7 @@ export default function CredentialsSectionFields() {
           width="size-4600"
           name="credentials.accessKeyId"
           label="Access key ID"
+          supportDataElement
         />
         <WrappedTextField
           width="size-4600"

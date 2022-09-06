@@ -10,9 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import React from 'react';
-import { Flex, Heading, View } from '@adobe/react-spectrum';
+/* eslint-disable jsx-a11y/anchor-is-valid */
 
+import React from 'react';
+import { Flex, Heading, View, Link, Text } from '@adobe/react-spectrum';
 import WrappedTextField from '../../../components/wrappedTextField';
 import WrappedComboboxField from '../../../components/wrappedComboBox';
 import awsRegions from '../../../utils/awsRegions';
@@ -22,9 +23,22 @@ export default function RequestSectionFields() {
     <View>
       <Heading level="3">Kinesis Data Stream Details</Heading>
 
-      <Flex direction="column" gap="size-150">
+      <Flex direction="column" gap="size-150" minWidth="size-6000">
+        <Flex gap="size-75">
+          <Text>Learn more about</Text>
+          <Link>
+            <a
+              href="https://docs.aws.amazon.com/streams/latest/dev/key-concepts.html"
+              rel="noreferrer"
+              target="_blank"
+            >
+              Amazon Kinesis Data Streams Terminology and Concepts
+            </a>
+          </Link>
+        </Flex>
+
         <WrappedTextField
-          minWidth="size-6000"
+          minWidth="size-4600"
           width="size-4600"
           name="streamName"
           label="Stream Name"
@@ -34,7 +48,7 @@ export default function RequestSectionFields() {
         />
 
         <WrappedComboboxField
-          minWidth="size-6000"
+          minWidth="size-4600"
           width="size-4600"
           name="region"
           label="AWS Region"
@@ -46,6 +60,31 @@ export default function RequestSectionFields() {
             .getRegionNames()
             .map((q) => ({ id: q, name: q }))}
         />
+
+        <Flex direction="column">
+          <WrappedTextField
+            minWidth="size-4600"
+            width="size-4600"
+            name="partitionKey"
+            label="Partition Key"
+            description="A partition key is used to group data by shard within a stream."
+            necessityIndicator="label"
+            isRequired
+            supportDataElement
+          />
+          <Flex gap="size-75">
+            <Text>Learn more about</Text>
+            <Link>
+              <a
+                href="https://aws.amazon.com/blogs/big-data/under-the-hood-scaling-your-kinesis-data-streams/"
+                rel="noreferrer"
+                target="_blank"
+              >
+                scaling your Kinesis data streams
+              </a>
+            </Link>
+          </Flex>
+        </Flex>
       </Flex>
     </View>
   );

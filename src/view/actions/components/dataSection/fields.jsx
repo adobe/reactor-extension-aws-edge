@@ -146,6 +146,7 @@ export default function DataSectionFields() {
         </>
       ) : (
         <WrappedTextField
+          minWidth="size-4600"
           width="100%"
           component={TextArea}
           name="dataRaw"
