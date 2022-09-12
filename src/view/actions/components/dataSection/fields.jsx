@@ -80,7 +80,7 @@ export default function DataSectionFields() {
                     shouldValidate: true,
                     shouldDirty: true
                   });
-                } else {
+                } else if (dataJsonPairs.length > 1 || dataJsonPairs[0].key) {
                   let entity = JSON.stringify(
                     addToEntityFromVariables({}, dataJsonPairs),
                     null,
