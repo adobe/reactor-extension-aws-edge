@@ -18,11 +18,11 @@ export default ({ dataJsonPairs = [], dataType, dataRaw }) => {
       errors.dataRaw = 'Please provide a payload';
     }
   } else if (dataJsonPairs.length === 1 && !dataJsonPairs[0].key) {
-    errors[`dataJsonPairs.0.key`] = 'Please provide a key name';
+    errors[`dataJsonPairs.0.key`] = 'Please provide a key name.';
   } else {
     dataJsonPairs.forEach((q, index) => {
       if (!q.key && q.value) {
-        errors[`dataJsonPairs.${index}.key`] = 'Please provide a key name';
+        errors[`dataJsonPairs.${index}.key`] = 'Please provide a key name.';
       }
     });
   }

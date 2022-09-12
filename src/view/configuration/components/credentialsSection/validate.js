@@ -16,13 +16,12 @@ export default ({ credentials }) => {
 
   if (!accessKeyId) {
     errors.credentials = errors.credentials || {};
-    errors.credentials.accessKeyId = 'The Access key ID must be provided';
+    errors.credentials.accessKeyId = 'Please provide an Access key ID.';
   }
 
   if (!secretAccessKey) {
     errors.credentials = errors.credentials || {};
-    errors.credentials.secretAccessKey =
-      'The Secret Acesss key must be provided';
+    errors.credentials.secretAccessKey = 'Please provide a Secret Acesss key.';
   }
 
   return errors;

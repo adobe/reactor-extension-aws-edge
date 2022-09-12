@@ -14,15 +14,15 @@ export default ({ streamName, region, partitionKey }) => {
   const errors = {};
 
   if (!streamName) {
-    errors.streamName = 'Please provide a stream name';
+    errors.streamName = 'Please provide a stream name.';
   }
 
   if (!region) {
-    errors.region = 'Please provide an AWS region';
+    errors.region = 'Please provide an AWS region.';
   }
 
   if (!partitionKey) {
-    errors.partitionKey = 'Please provide a partition key';
+    errors.partitionKey = 'Please provide a partition key.';
   }
 
   return errors;
