@@ -48,114 +48,118 @@ export default function DataSectionFields() {
   return (
     <View>
       <Heading level="3">Data</Heading>
+      <Flex direction="column" gap="size-150">
+        <Controller
+          control={control}
+          name="dataType"
+          defaultValue=""
+          render={({ field: { onChange, value } }) => (
+            <RadioGroup
+              label="Select the way you want to provide the data"
+              value={value}
+              onChange={(v) => {
+                onChange(v);
 
-      <Controller
-        control={control}
-        name="dataType"
-        defaultValue=""
-        render={({ field: { onChange, value } }) => (
-          <RadioGroup
-            marginTop="size-250"
-            label="Select the way you want to provide the data"
-            value={value}
-            onChange={(v) => {
-              onChange(v);
+                // Auto Update Data Content
+                if (v === 'json') {
+                  let variables = [];
+                  try {
+                    variables = addToVariablesFromEntity(
+                      [],
+                      JSON.parse(dataRaw)
+                    );
+                  } catch (e) {
+                    // Don't do anything
+                  }
 
-              // Auto Update Data Content
-              if (v === 'json') {
-                let variables = [];
-                try {
-                  variables = addToVariablesFromEntity([], JSON.parse(dataRaw));
-                } catch (e) {
-                  // Don't do anything
+                  if (variables.length === 0) {
+                    variables.push(getEmptyDataJson());
+                  }
+
+                  setValue('dataJsonPairs', variables, {
+                    shouldValidate: true,
+                    shouldDirty: true
+                  });
+                } else {
+                  let entity = JSON.stringify(
+                    addToEntityFromVariables({}, dataJsonPairs),
+                    null,
+                    2
+                  );
+
+                  if (entity === '{}') {
+                    entity = '';
+                  }
+
+                  setValue('dataRaw', entity, {
+                    shouldValidate: true,
+                    shouldDirty: true
+                  });
                 }
-
-                if (variables.length === 0) {
-                  variables.push(getEmptyDataJson());
-                }
-
-                setValue('dataJsonPairs', variables, {
-                  shouldValidate: true,
-                  shouldDirty: true
-                });
-              } else {
-                let entity = JSON.stringify(
-                  addToEntityFromVariables({}, dataJsonPairs),
-                  null,
-                  2
-                );
-
-                if (entity === '{}') {
-                  entity = '';
-                }
-
-                setValue('dataRaw', entity, {
-                  shouldValidate: true,
-                  shouldDirty: true
-                });
-              }
-              // END: Auto Update Data Content
-            }}
-          >
-            <Flex>
-              <Radio value="raw">Raw</Radio>
-              <Radio value="json">JSON Key-Value Pairs Editor</Radio>
-            </Flex>
-          </RadioGroup>
-        )}
-      />
-
-      {dataType === 'json' ? (
-        <>
-          <Flex direction="column" gap="size-100">
-            <Flex direction="row" gap="size-200">
-              <View flex>
-                <Heading
-                  level="5"
-                  marginStart="size-100"
-                  marginTop="size-100"
-                  marginBottom="size-50"
-                >
-                  KEY
-                </Heading>
-              </View>
-              <View flex>
-                <Heading
-                  level="5"
-                  marginStart="size-100"
-                  marginTop="size-100"
-                  marginBottom="size-50"
-                >
-                  VALUE
-                </Heading>
-              </View>
-              <View width="size-450" />
-            </Flex>
-            <Divider size="S" />
-            {fields.map(row.bind(null, remove))}
-          </Flex>
-
-          <Button
-            marginTop="size-150"
-            variant="primary"
-            onPress={() => append(getEmptyDataJson())}
-          >
-            <Add />
-            <Text>Add Another</Text>
-          </Button>
-        </>
-      ) : (
-        <WrappedTextField
-          minWidth="size-4600"
-          width="100%"
-          component={TextArea}
-          name="dataRaw"
-          label="Payload"
-          necessityIndicator="label"
-          isRequired
-          supportDataElement
+                // END: Auto Update Data Content
+              }}
+            >
+              <Flex>
+                <Radio value="raw">Raw</Radio>
+                <Radio value="json">JSON Key-Value Pairs Editor</Radio>
+              </Flex>
+            </RadioGroup>
+          )}
         />
-      )}
+
+        {dataType === 'json' ? (
+          <>
+            <Flex direction="column" gap="size-100">
+              <Flex direction="row" gap="size-200">
+                <View flex>
+                  <Heading
+                    level="5"
+                    marginStart="size-100"
+                    marginTop="size-100"
+                    marginBottom="size-50"
+                  >
+                    KEY
+                  </Heading>
+                </View>
+                <View flex>
+                  <Heading
+                    level="5"
+                    marginStart="size-100"
+                    marginTop="size-100"
+                    marginBottom="size-50"
+                  >
+                    VALUE
+                  </Heading>
+                </View>
+                <View width="size-450" />
+              </Flex>
+              <Divider size="S" />
+              {fields.map(row.bind(null, remove))}
+            </Flex>
+
+            <View>
+              <Button
+                variant="primary"
+                onPress={() => append(getEmptyDataJson())}
+              >
+                <Add />
+                <Text>Add Another</Text>
+              </Button>
+            </View>
+          </>
+        ) : (
+          <WrappedTextField
+            minWidth="size-4600"
+            width="100%"
+            component={TextArea}
+            name="dataRaw"
+            label="Payload"
+            necessityIndicator="label"
+            isRequired
+            supportDataElement
+          />
+        )}
+      </Flex>
     </View>
   );
 }

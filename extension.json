@@ -3,6 +3,7 @@
   "name": "aws",
   "iconPath": "resources/icons/aws.svg",
   "version": "1.0.0",
+  "exchangeUrl": "https://exchange.adobe.com/apps/ec/108853/aws",
   "description": "Server side extension that allows users to send data to AWS.",
   "author": {
     "name": "Adobe Systems",

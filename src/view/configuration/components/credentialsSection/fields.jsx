@@ -11,14 +11,13 @@ governing permissions and limitations under the License.
 */
 
 import React from 'react';
-import { Heading, Divider, Flex } from '@adobe/react-spectrum';
+import { Heading, Flex } from '@adobe/react-spectrum';
 import WrappedTextField from '../../../components/wrappedTextField';
 
 export default function CredentialsSectionFields() {
   return (
     <>
       <Heading level="3">AWS Credentials</Heading>
-      <Divider size="M" marginBottom="size-150" />
       <Flex gap="size-150" direction="column">
         <WrappedTextField
           width="size-4600"
