@@ -1,7 +1,7 @@
 {
-  "name": "@adobe/reactor-extension-cloud-connector-edge",
+  "name": "@adobe/reactor-extension-aws-edge",
   "version": "1.0.0",
-  "description": "Adobe Experience Platform Launch Server Side that allows you to make fetch calls to third-party endpoints.",
+  "description": "Adobe Experience Platform event forwarding extension to make calls to AWS.",
   "author": {
     "name": "Adobe Systems",
     "url": "http://adobe.com",
@@ -13,14 +13,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:adobe/reactor-extension-cloud-connector-edge.git"
+    "url": "git@github.com:adobe/reactor-extension-aws-edge.git"
   },
   "scripts": {
-    "build": "rm -rf dist && webpack --mode production",
+    "build:kinesis": "webpack -c webpack.kinesis.config.mjs",
+    "build": "webpack --mode production",
     "build:watch": "webpack --mode development --watch",
-    "sandbox": "concurrently -k -n webpack,sandbox -c \"bgBlue,bgMagenta\" \"npm run build:watch\" \"reactor-sandbox\"",
-    "package": "npm run build && npx @adobe/reactor-packager",
-    "prepack": "npm test && npm run build",
+    "clean": "rm -rf dist",
+    "sandbox": "npm run build:kinesis -- --target node && concurrently -k -n webpack,sandbox -c \"bgBlue,bgMagenta\" \"npm run build:watch\" \"reactor-sandbox\"",
+    "package": "npm run clean && npm run build && npm run build:kinesis -- --target webworker && npx @adobe/reactor-packager",
+    "prepack": "npm run clean && npm test && npm run build && npm run build:kinesis -- --target node",
     "lint": "eslint 'src/**'",
     "format": "pretty-quick",
     "test": "jest --coverage",
@@ -38,6 +40,7 @@
     "@aws-sdk/client-kinesis": "^3.160.0",
     "@spectrum-icons/illustrations": "^3.3.1",
     "@spectrum-icons/workflow": "^4.0.1",
+    "aws-crt": "^1.14.4",
     "classnames": "^2.3.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",

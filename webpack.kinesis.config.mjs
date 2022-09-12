@@ -10,20 +10,21 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export default ({ streamName, region, partitionKey }) => {
-  const errors = {};
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-  if (!streamName) {
-    errors.streamName = 'Please provide a stream name';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+export default {
+  mode: 'development',
+  devtool: false,
+  entry: './kinesis.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'kinesis.js',
+    library: {
+      type: 'commonjs2'
+    }
   }
-
-  if (!region) {
-    errors.region = 'Please provide an AWS region';
-  }
-
-  if (!partitionKey) {
-    errors.partitionKey = 'Please provide a partition key';
-  }
-
-  return errors;
 };

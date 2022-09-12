@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 const getKinesisClient = require('./helpers/getKinesisClient');
-const { PutRecordCommand } = require('@aws-sdk/client-kinesis');
+const { PutRecordCommand } = require('../../../dist/kinesis.js');
 const { jsonToBinaryArray } = require('./helpers/jsonUtilities');
 
 module.exports = async ({

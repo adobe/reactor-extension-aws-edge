@@ -24,12 +24,16 @@ export default function CredentialsSectionFields() {
           width="size-4600"
           name="credentials.accessKeyId"
           label="Access key ID"
+          necessityIndicator="label"
+          isRequired
           supportDataElement
         />
         <WrappedTextField
           width="size-4600"
           name="credentials.secretAccessKey"
           label="Secret Access Key"
+          necessityIndicator="label"
+          isRequired
           supportDataElement
         />
       </Flex>
