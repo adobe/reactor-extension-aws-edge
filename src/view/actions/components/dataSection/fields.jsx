@@ -11,22 +11,11 @@ governing permissions and limitations under the License.
 */
 
 import React from 'react';
-import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 
-import {
-  Button,
-  Flex,
-  Heading,
-  RadioGroup,
-  Radio,
-  TextArea,
-  Divider,
-  View,
-  Text
-} from '@adobe/react-spectrum';
-import Add from '@spectrum-icons/workflow/Add';
+import { Heading, View } from '@adobe/react-spectrum';
 import getEmptyDataJson from './getEmptyValue';
-import WrappedTextField from '../../../components/wrappedTextField';
+
 import PayloadEditor from '../../../components/rawJsonEditor';
 import PayloadRow from './row';
 
