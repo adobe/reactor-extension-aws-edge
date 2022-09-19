@@ -25,141 +25,73 @@ import {
   Text
 } from '@adobe/react-spectrum';
 import Add from '@spectrum-icons/workflow/Add';
-import row from './row';
 import getEmptyDataJson from './getEmptyValue';
 import WrappedTextField from '../../../components/wrappedTextField';
+import PayloadEditor from '../../../components/rawJsonEditor';
+import PayloadRow from './row';
+
 import {
   addToVariablesFromEntity,
   addToEntityFromVariables
 } from '../../../utils/entityVariablesConverter';
 
 export default function DataSectionFields() {
-  const { control, setValue, watch } = useFormContext();
-  const [dataType, dataRaw, dataJsonPairs] = watch([
-    'dataType',
-    'dataRaw',
-    'dataJsonPairs'
-  ]);
-
-  const { fields, append, remove } = useFieldArray({
-    name: 'dataJsonPairs'
-  });
+  const { setValue, watch } = useFormContext();
+  const [dataRaw, dataJsonPairs] = watch(['dataRaw', 'dataJsonPairs']);
 
   return (
     <View>
       <Heading level="3">Data</Heading>
-      <Flex direction="column" gap="size-150">
-        <Controller
-          control={control}
-          name="dataType"
-          defaultValue=""
-          render={({ field: { onChange, value } }) => (
-            <RadioGroup
-              label="Select the way you want to provide the data"
-              value={value}
-              onChange={(v) => {
-                onChange(v);
+      <PayloadEditor
+        label="Payload"
+        radioLabel="Select the way you want to provide the payload"
+        description={
+          'A valid JSON that contains the Kinesis payload' +
+          ' or a data element.'
+        }
+        isRequired
+        typeVariable="dataType"
+        rawVariable="dataRaw"
+        jsonVariable="dataJsonPairs"
+        getEmptyJsonValueFn={getEmptyDataJson}
+        row={PayloadRow}
+        onTypeSwitch={(v) => {
+          // Auto Update Data Content
+          if (v === 'json') {
+            let variables = [];
+            try {
+              variables = addToVariablesFromEntity([], JSON.parse(dataRaw));
+            } catch (e) {
+              // Don't do anything
+            }
 
-                // Auto Update Data Content
-                if (v === 'json') {
-                  let variables = [];
-                  try {
-                    variables = addToVariablesFromEntity(
-                      [],
-                      JSON.parse(dataRaw)
-                    );
-                  } catch (e) {
-                    // Don't do anything
-                  }
+            if (variables.length === 0) {
+              variables.push(getEmptyDataJson());
+            }
 
-                  if (variables.length === 0) {
-                    variables.push(getEmptyDataJson());
-                  }
+            setValue('dataJsonPairs', variables, {
+              shouldValidate: true,
+              shouldDirty: true
+            });
+          } else if (dataJsonPairs.length > 1 || dataJsonPairs[0].key) {
+            let entity = JSON.stringify(
+              addToEntityFromVariables({}, dataJsonPairs),
+              null,
+              2
+            );
 
-                  setValue('dataJsonPairs', variables, {
-                    shouldValidate: true,
-                    shouldDirty: true
-                  });
-                } else if (dataJsonPairs.length > 1 || dataJsonPairs[0].key) {
-                  let entity = JSON.stringify(
-                    addToEntityFromVariables({}, dataJsonPairs),
-                    null,
-                    2
-                  );
+            if (entity === '{}') {
+              entity = '';
+            }
 
-                  if (entity === '{}') {
-                    entity = '';
-                  }
-
-                  setValue('dataRaw', entity, {
-                    shouldValidate: true,
-                    shouldDirty: true
-                  });
-                }
-                // END: Auto Update Data Content
-              }}
-            >
-              <Flex>
-                <Radio value="raw">Raw</Radio>
-                <Radio value="json">JSON Key-Value Pairs Editor</Radio>
-              </Flex>
-            </RadioGroup>
-          )}
-        />
-
-        {dataType === 'json' ? (
-          <>
-            <Flex direction="column" gap="size-100">
-              <Flex direction="row" gap="size-200">
-                <View flex>
-                  <Heading
-                    level="5"
-                    marginStart="size-100"
-                    marginTop="size-100"
-                    marginBottom="size-50"
-                  >
-                    KEY
-                  </Heading>
-                </View>
-                <View flex>
-                  <Heading
-                    level="5"
-                    marginStart="size-100"
-                    marginTop="size-100"
-                    marginBottom="size-50"
-                  >
-                    VALUE
-                  </Heading>
-                </View>
-                <View width="size-450" />
-              </Flex>
-              <Divider size="S" />
-              {fields.map(row.bind(null, remove))}
-            </Flex>
-
-            <View>
-              <Button
-                variant="primary"
-                onPress={() => append(getEmptyDataJson())}
-              >
-                <Add />
-                <Text>Add Another</Text>
-              </Button>
-            </View>
-          </>
-        ) : (
-          <WrappedTextField
-            minWidth="size-4600"
-            width="100%"
-            component={TextArea}
-            name="dataRaw"
-            label="Payload"
-            necessityIndicator="label"
-            isRequired
-            supportDataElement
-          />
-        )}
-      </Flex>
+            setValue('dataRaw', entity, {
+              shouldValidate: true,
+              shouldDirty: true
+            });
+          }
+          // END: Auto Update Data Content
+        }}
+      />
     </View>
   );
 }
