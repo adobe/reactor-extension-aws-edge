@@ -103,7 +103,7 @@ describe('Send data to kinesis data stream view', () => {
     });
   });
 
-  test.only('sets settings from form values when JSON editors are used', async () => {
+  test('sets settings from form values when JSON editors are used', async () => {
     renderView(SendDataToKinesisDataStream);
 
     extensionBridge.init({
