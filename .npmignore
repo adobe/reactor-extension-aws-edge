@@ -1,9 +1,10 @@
 __tests__
 src/view
-createEntryFile.js
+createEntryFile.mjs
 \.*
-adobe-reactor-extension-cloud-connector-edge-*.tgz
+webpack.*
 coverage
 jest.config.js
-webpack.config.js
-package-adobe-cloud-connector-*.zip
+adobe-reactor-extension-aws-edge-*.tgz
+package-aws-*.zip
+kinesis.js

@@ -10,18 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import checkRequired from '../../../utils/checkRequired';
-
-export default ({ streamName, region, partitionKey }) => {
-  const errors = {};
-
-  [
-    ['streamName', streamName, 'a stream name'],
-    ['region', region, 'an AWS region'],
-    ['partitionKey', partitionKey, 'a partition key']
-  ].forEach(([key, value, errorVariableDescription]) => {
-    checkRequired(key, value, errorVariableDescription || `a ${key}`, errors);
-  });
-
-  return errors;
+export default (variable, value, errorVariableDescription, errors) => {
+  if (!value) {
+    errors[variable] = `Please proivde ${errorVariableDescription}.`;
+  }
 };

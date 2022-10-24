@@ -15,7 +15,7 @@ export default ({ dataJsonPairs = [], dataType, dataRaw }) => {
 
   if (dataType === 'raw') {
     if (!dataRaw) {
-      errors.dataRaw = 'Please provide a payload';
+      errors.dataRaw = 'Please provide a payload.';
     }
   } else if (dataJsonPairs.length === 1 && !dataJsonPairs[0].key) {
     errors[`dataJsonPairs.0.key`] = 'Please provide a key name.';

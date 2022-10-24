@@ -27,6 +27,7 @@ import {
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import Add from '@spectrum-icons/workflow/Add';
 import WrappedTextField from './wrappedTextField';
+import camelToTitle from '../utils/camelToTitle';
 
 export default function RawJsonEditor({
   label,
@@ -38,6 +39,7 @@ export default function RawJsonEditor({
   jsonVariable,
   getEmptyJsonValueFn,
   onTypeSwitch,
+  contextualHelp,
   row
 }) {
   const { control, watch } = useFormContext();
@@ -65,11 +67,22 @@ export default function RawJsonEditor({
               reactHookFormOnChange(v);
               onTypeSwitch(v);
             }}
+            contextualHelp={contextualHelp}
           >
             <Flex alignItems="center">
               <Text marginEnd="size-150">{radioLabel}</Text>
-              <Radio value="raw">Raw</Radio>
-              <Radio value="json">JSON Key-Value Pairs Editor</Radio>
+              <Radio
+                value="raw"
+                aria-label={`${camelToTitle(typeVariable)} Raw`}
+              >
+                Raw
+              </Radio>
+              <Radio
+                value="json"
+                aria-label={`${camelToTitle(typeVariable)} JSON`}
+              >
+                JSON Key-Value Pairs Editor
+              </Radio>
             </Flex>
           </RadioGroup>
         )}
@@ -121,7 +134,7 @@ export default function RawJsonEditor({
           width="100%"
           component={TextArea}
           name={rawVariable}
-          aria-label={`${rawVariable} Raw`}
+          aria-label={camelToTitle(rawVariable)}
           supportDataElement
           description={description}
         />

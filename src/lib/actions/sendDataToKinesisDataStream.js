@@ -40,6 +40,7 @@ module.exports = async ({
     const data = await kinesisClient.send(command);
     logger.log(data);
   } catch (error) {
+    console.log(error);
     logger.error({ ...error, message: error.message });
   }
 };

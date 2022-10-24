@@ -13,7 +13,14 @@ governing permissions and limitations under the License.
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import React from 'react';
-import { Flex, Heading, View, Link, Text } from '@adobe/react-spectrum';
+import {
+  Flex,
+  Heading,
+  View,
+  Link,
+  ContextualHelp,
+  Content
+} from '@adobe/react-spectrum';
 import WrappedTextField from '../../../components/wrappedTextField';
 import WrappedComboboxField from '../../../components/wrappedComboBox';
 import awsRegions from '../../../utils/awsRegions';
@@ -21,22 +28,34 @@ import awsRegions from '../../../utils/awsRegions';
 export default function RequestSectionFields() {
   return (
     <View>
-      <Heading level="3">Kinesis Data Stream Details</Heading>
+      <Flex alignItems="center" gap="size-75">
+        <Heading level="3">Kinesis Data Stream Details</Heading>
+
+        <ContextualHelp>
+          <Heading>Need help?</Heading>
+          <Content>
+            <p>
+              Amazon Kinesis Data Streams is used to collect and process large
+              streams of data records in real time.
+            </p>
+            <p>
+              Learn more about{' '}
+              <Link>
+                <a
+                  href="https://docs.aws.amazon.com/streams/latest/dev/key-concepts.html"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  Amazon Kinesis Data Streams Terminology and Concepts
+                </a>
+              </Link>
+              .
+            </p>
+          </Content>
+        </ContextualHelp>
+      </Flex>
 
       <Flex direction="column" gap="size-150" minWidth="size-6000">
-        <Flex gap="size-75">
-          <Text>Learn more about</Text>
-          <Link>
-            <a
-              href="https://docs.aws.amazon.com/streams/latest/dev/key-concepts.html"
-              rel="noreferrer"
-              target="_blank"
-            >
-              Amazon Kinesis Data Streams Terminology and Concepts
-            </a>
-          </Link>
-        </Flex>
-
         <WrappedTextField
           minWidth="size-4600"
           width="size-4600"
@@ -71,19 +90,41 @@ export default function RequestSectionFields() {
             necessityIndicator="label"
             isRequired
             supportDataElement
+            contextualHelp={
+              <ContextualHelp>
+                <Heading>Need help?</Heading>
+                <Content>
+                  <p>
+                    Each data stream is composed of one or more shards that act
+                    as units of capacity. As workloads grow, an application may
+                    read or write to a shard at a rate that exceeds its
+                    capacity, creating a hot shard and requiring you to add
+                    capacity quickly.
+                  </p>
+                  <p>
+                    The partition key determines to which shard the record is
+                    written. The partition key is a Unicode string with a
+                    maximum length of 256 bytes. Choosing a good partition key
+                    strategy helps you take full advantage of the capacity you
+                    provision and avoid hot shards.
+                  </p>
+                  <p>
+                    Learn more about{' '}
+                    <Link>
+                      <a
+                        href="https://aws.amazon.com/blogs/big-data/under-the-hood-scaling-your-kinesis-data-streams/"
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        scaling your Kinesis data streams
+                      </a>
+                    </Link>
+                    .
+                  </p>
+                </Content>
+              </ContextualHelp>
+            }
           />
-          <Flex gap="size-75">
-            <Text>Learn more about</Text>
-            <Link>
-              <a
-                href="https://aws.amazon.com/blogs/big-data/under-the-hood-scaling-your-kinesis-data-streams/"
-                rel="noreferrer"
-                target="_blank"
-              >
-                scaling your Kinesis data streams
-              </a>
-            </Link>
-          </Flex>
         </Flex>
       </Flex>
     </View>

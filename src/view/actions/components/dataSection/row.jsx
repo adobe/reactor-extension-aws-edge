@@ -41,7 +41,7 @@ export default function DataSectionRow(remove, variable, index, variables) {
       <View width="size-450">
         {variables.length > 1 && (
           <ActionButton
-            aria-label={`Delete Data JSON ${index}`}
+            aria-label={`Delete Data JSON Row ${index}`}
             isQuiet
             onPress={() => {
               remove(index);

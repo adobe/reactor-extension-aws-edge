@@ -4,6 +4,6 @@ test_results
 dist
 .sandbox
 .entries
-adobe-reactor-extension-cloud-connector-edge-*.tgz
-package-adobe-cloud-connector-*.zip
+adobe-reactor-extension-aws-edge-*.tgz
+package-aws-*.zip
 .eslintcache

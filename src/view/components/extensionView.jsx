@@ -29,7 +29,7 @@ const ExtensionView = function ExtensionView({
   const [isInitialized, setIsInitialized] = useState(false);
 
   const methods = useForm({
-    mode: 'onTouched',
+    mode: 'onBlur',
     shouldUnregister: false,
     resolver: (values) => {
       const errors = validate(values);

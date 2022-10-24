@@ -10,14 +10,44 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
 import React from 'react';
-import { Heading, Flex } from '@adobe/react-spectrum';
+import {
+  Heading,
+  Flex,
+  ContextualHelp,
+  Content,
+  Link
+} from '@adobe/react-spectrum';
 import WrappedTextField from '../../../components/wrappedTextField';
 
 export default function CredentialsSectionFields() {
   return (
     <>
-      <Heading level="3">AWS Credentials</Heading>
+      <Flex alignItems="center" gap="size-75">
+        <Heading level="3">Credentials</Heading>
+
+        <ContextualHelp>
+          <Heading>Need help?</Heading>
+          <Content>
+            <p>
+              Learn more about how to genereate{' '}
+              <Link>
+                <a
+                  href="https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  AWS Account and Access Keys
+                </a>
+              </Link>
+              .
+            </p>
+          </Content>
+        </ContextualHelp>
+      </Flex>
+
       <Flex gap="size-150" direction="column">
         <WrappedTextField
           width="size-4600"
@@ -30,7 +60,7 @@ export default function CredentialsSectionFields() {
         <WrappedTextField
           width="size-4600"
           name="credentials.secretAccessKey"
-          label="Secret Access Key"
+          label="Secret Access key"
           necessityIndicator="label"
           isRequired
           supportDataElement
