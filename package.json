@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Adobe Experience Platform event forwarding extension to make calls to AWS.",
   "author": {
-    "name": "Adobe Systems",
+    "name": "Adobe",
     "url": "http://adobe.com",
     "email": "reactor@adobe.com"
   },
