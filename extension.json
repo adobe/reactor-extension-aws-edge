@@ -6,7 +6,7 @@
   "exchangeUrl": "https://partners.adobe.com/exchangeprogram/experiencecloud/exchange.details.108973.html",
   "description": "Server side extension that allows users to send data to AWS.",
   "author": {
-    "name": "Adobe Systems",
+    "name": "Adobe",
     "url": "http://adobe.com",
     "email": "reactor@adobe.com"
   },
