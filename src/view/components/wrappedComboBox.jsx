@@ -100,15 +100,16 @@ export default function WrappedComboBoxField({
               inputValue={fieldState.inputValue}
               onSelectionChange={(key) => {
                 setFieldState((prevState) => {
+                  const inputValue =
+                    list.getItem(key)?.value.name ??
+                    (rest.allowsCustomValue ? prevState.inputValue : '');
+                  onChange(inputValue);
+
                   return {
-                    inputValue:
-                      list.getItem(key)?.value.name ??
-                      (rest.allowsCustomValue ? prevState.inputValue : ''),
+                    inputValue,
                     selectedKey: key
                   };
                 });
-
-                onChange(fieldState.inputValue);
 
                 if (componentOnSelectionChange) {
                   componentOnSelectionChange(key);
