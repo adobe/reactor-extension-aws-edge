@@ -19,7 +19,7 @@ import getCredentialsInitValues from './components/credentialsSection/getInitVal
 import getCredentialsSettings from './components/credentialsSection/getSettings';
 import validateCredentialsFields from './components/credentialsSection/validate';
 
-export default function SendDataToKinesis() {
+export default function Configuration() {
   return (
     <ExtensionView
       getInitialValues={({ initInfo }) => ({
