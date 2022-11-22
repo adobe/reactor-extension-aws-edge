@@ -68,7 +68,7 @@ describe('Send data to kinesis data stream view', () => {
     expect(streamNameField.value).toBe('stream name');
     expect(awsRegionField.value).toBe('US East (N. Virginia)');
     expect(partitionKeyField.value).toBe('1234');
-    expect(dataField.value).toBe('{"a":"b"}');
+    expect(dataField.value).toBe('{\n  "a": "b"\n}');
   });
 
   test('sets settings from form values', async () => {

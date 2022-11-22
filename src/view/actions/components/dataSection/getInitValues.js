@@ -14,7 +14,7 @@ export default ({ settings }) => {
   let dataRaw = settings?.data || '';
 
   if (typeof dataRaw === 'object') {
-    dataRaw = JSON.stringify(dataRaw);
+    dataRaw = JSON.stringify(dataRaw, null, 2);
   }
 
   return {
