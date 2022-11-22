@@ -3,7 +3,7 @@
   "name": "aws",
   "iconPath": "resources/icons/aws.svg",
   "version": "1.0.0",
-  "exchangeUrl": "https://partners.adobe.com/exchangeprogram/experiencecloud/exchange.details.108973.html",
+  "exchangeUrl": "https://exchange.adobe.com/apps/ec/109073/aws-event-forwarding-extension",
   "description": "Server side extension that allows users to send data to AWS.",
   "author": {
     "name": "Adobe",
