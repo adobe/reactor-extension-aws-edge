@@ -1,8 +1,7 @@
 # AWS extension for Adobe Experience Platform Launch Server Side
 
-[![Build Status](https://img.shields.io/github/workflow/status/adobe/reactor-extension-edge-edge/ci?style=flat)](https://github.com/adobe/reactor-extension-aws-edge/actions)
-[![Coverage Status](https://coveralls.io/repos/github/adobe/reactor-extension-edge-edge/badge.svg?branch=main)](https://coveralls.io/github/adobe/reactor-extension-aws-edge?branch=main)
-[![npm (scoped with tag)](https://img.shields.io/npm/v/@adobe/reactor-extension-edge-edge.svg?style=flat)](https://www.npmjs.com/package/@adobe/reactor-extension-aws-edge)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/adobe/reactor-extension-aws-edge/node.js.yml?style=flat)](https://github.com/adobe/reactor-extension-aws-edge/actions)
+[![Coverage Status](https://coveralls.io/repos/github/adobe/reactor-extension-aws-edge/badge.svg?branch=main)](https://coveralls.io/github/adobe/reactor-extension-aws-edge?branch=main)
 
 AWS extension for Launch Server Side. It allows you forward data to AWS Kinesis Data Stream.
 
