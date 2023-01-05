@@ -1,4 +1,4 @@
-# AWS extension for Adobe Experience Platform Launch Server Side
+# AWS extension for Adobe Experience Platform Event Forwarding
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/adobe/reactor-extension-aws-edge/node.js.yml?style=flat)](https://github.com/adobe/reactor-extension-aws-edge/actions)
 [![Coverage Status](https://coveralls.io/repos/github/adobe/reactor-extension-aws-edge/badge.svg?branch=main)](https://coveralls.io/github/adobe/reactor-extension-aws-edge?branch=main)
